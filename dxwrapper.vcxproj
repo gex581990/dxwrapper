@@ -181,7 +181,6 @@ copy /Y "$(ProjectDir)License.txt" "$(TargetDir)Build\" &gt;nul</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="d3d8\d3d8.cpp" />
     <ClCompile Include="d3d9\AddressLookupTable.cpp" />
     <ClCompile Include="d3d9\d3d9.cpp" />
     <ClCompile Include="d3d9\DebugOverlay.cpp" />
@@ -681,7 +680,6 @@ copy /Y "$(ProjectDir)License.txt" "$(TargetDir)Build\" &gt;nul</Command>
     <None Include="Dllmain\dxwrapper.def" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="d3d8\d3d8External.h" />
     <ClInclude Include="d3d9\AddressLookupTable.h" />
     <ClInclude Include="d3d9\d3d9.h" />
     <ClInclude Include="d3d9\d3d9External.h" />
