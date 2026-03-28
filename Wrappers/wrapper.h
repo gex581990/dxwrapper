@@ -12,6 +12,7 @@ namespace Wrapper
 struct DXWAPPERSETTINGS
 {
 	bool Dd7to9 = false;
+	bool Dinputto8 = false;
 };
 
 typedef void(WINAPI* DxWrapperSettingsProc)(DXWAPPERSETTINGS* DxSettings);
@@ -22,7 +23,9 @@ typedef void(WINAPI* DxWrapperLoggingProc)(const char* LogMessage);
 
 #define VISIT_DLLS_BASIC(visit) \
 	visit(d3d9) \
-	visit(ddraw)
+	visit(ddraw) \
+	visit(dinput) \
+	visit(dinput8)
 
 #define VISIT_DLLS_STUB(visit) \
 	visit(bcrypt) \
@@ -53,6 +56,8 @@ typedef void(WINAPI* DxWrapperLoggingProc)(const char* LogMessage);
 // Wrappers
 #include "d3d9.h"
 #include "ddraw.h"
+#include "dinput.h"
+#include "dinput8.h"
 #ifdef STUB
 #include "bcrypt.h"
 #include "cryptbase.h"
@@ -96,6 +101,18 @@ namespace ddraw
 {
 	VISIT_PROCS_DDRAW(DECLARE_PROC_VARIABLES);
 	VISIT_SHARED_DDRAW_PROCS(DECLARE_PROC_VARIABLES_SHARED);
+	HMODULE Load(const char *ProxyDll, const char *MyDllName);
+}
+namespace dinput
+{
+	VISIT_PROCS_DINPUT(DECLARE_PROC_VARIABLES);
+	VISIT_SHARED_DINPUT_PROCS(DECLARE_PROC_VARIABLES_SHARED);
+	HMODULE Load(const char *ProxyDll, const char *MyDllName);
+}
+namespace dinput8
+{
+	VISIT_PROCS_DINPUT8(DECLARE_PROC_VARIABLES);
+	VISIT_SHARED_DINPUT8_PROCS(DECLARE_PROC_VARIABLES_SHARED);
 	HMODULE Load(const char *ProxyDll, const char *MyDllName);
 }
 namespace d3d9
