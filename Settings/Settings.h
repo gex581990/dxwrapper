@@ -25,21 +25,11 @@ inline std::ostream& operator<<(std::ostream& os, const DHEX& dhex) {
 #define VISIT_CONFIG_SETTINGS(visit) \
 	visit(AnisotropicFiltering) \
 	visit(AntiAliasing) \
-	visit(AudioClipDetection) \
-	visit(AudioFadeOutDelayMS) \
 	visit(CustomDisplayWidth) \
 	visit(CustomDisplayHeight) \
 	visit(Dd7to9) \
-	visit(D3d8to9) \
 	visit(D3d9to9Ex) \
 	visit(D3d9on12) \
-	visit(Dinputto8) \
-	visit(DDrawCompat) \
-	visit(DDrawCompat20) \
-	visit(DDrawCompat21) \
-	visit(DDrawCompat32) \
-	visit(DDrawCompatDisableGDIHook) \
-	visit(DDrawCompatNoProcAffinity) \
 	visit(DdrawAllowMultiSampling) \
 	visit(DdrawAlternatePixelCenter) \
 	visit(DdrawAutoFrameSkip) \
@@ -79,11 +69,7 @@ inline std::ostream& operator<<(std::ostream& os, const DHEX& dhex) {
 	visit(DdrawVertexLockDiscard) \
 	visit(DdrawEnableMouseHook) \
 	visit(DdrawHookSystem32) \
-	visit(D3d8HookSystem32) \
 	visit(D3d9HookSystem32) \
-	visit(DinputHookSystem32) \
-	visit(Dinput8HookSystem32) \
-	visit(DsoundHookSystem32) \
 	visit(SetSwapEffectShim) \
 	visit(DepthBiasFactor) \
 	visit(DepthBiasDropOffValue) \
@@ -92,13 +78,9 @@ inline std::ostream& operator<<(std::ostream& os, const DHEX& dhex) {
 	visit(DisableGDIGammaRamp) \
 	visit(DisableHighDPIScaling) \
 	visit(DisableLogging) \
-	visit(DirectShowEmulation) \
 	visit(CacheClipPlane) \
-	visit(EnvironmentCubeMapFix) \
 	visit(EnableDdrawWrapper) \
 	visit(EnableD3d9Wrapper) \
-	visit(EnableDinput8Wrapper) \
-	visit(EnableDsoundWrapper) \
 	visit(EnableImgui) \
 	visit(EnableMultisamplingATOC) \
 	visit(EnableOpenDialogHook) \
@@ -111,19 +93,9 @@ inline std::ostream& operator<<(std::ostream& os, const DHEX& dhex) {
 	visit(ForceMixedVertexProcessing) \
 	visit(ForceSystemMemVertexCache) \
 	visit(ForceSingleBeginEndScene) \
-	visit(FilterNonActiveInput) \
-	visit(FixHighFrequencyMouse) \
 	visit(FixPerfCounterUptime) \
-	visit(FixSpeakerConfigType) \
 	visit(FlipEx) \
-	visit(ForceExclusiveMode) \
-	visit(ForceHardwareMixing) \
-	visit(ForceHQ3DSoftMixing) \
-	visit(ForceNonStaticBuffers) \
-	visit(ForcePrimaryBufferFormat) \
-	visit(ForceSoftwareMixing) \
 	visit(ForceTermination) \
-	visit(ForceVoiceManagement) \
 	visit(ForceVsyncMode) \
 	visit(ForceWindowResize) \
 	visit(FullScreen) \
@@ -143,15 +115,8 @@ inline std::ostream& operator<<(std::ostream& os, const DHEX& dhex) {
 	visit(LoadPlugins) \
 	visit(LockColorkey) \
 	visit(LoopSleepTime) \
-	visit(MouseMovementFactor) \
-	visit(MouseMovementPadding) \
-	visit(Num2DBuffers) \
-	visit(Num3DBuffers) \
 	visit(OverrideRefreshRate) \
 	visit(OverrideStencilFormat) \
-	visit(PrimaryBufferBits) \
-	visit(PrimaryBufferChannels) \
-	visit(PrimaryBufferSamples) \
 	visit(RealDllPath) \
 	visit(ResetMemoryAfter) \
 	visit(ResetScreenRes) \
@@ -249,16 +214,8 @@ struct CONFIG
 	bool IsSet(DWORD Value);					// Check if a value is set
 	bool Exiting = false;						// Dxwrapper is being unloaded
 	bool Dd7to9 = false;						// Converts DirectDraw/Direct3D (ddraw.dll) to Direct3D9 (d3d9.dll)
-	bool D3d8to9 = false;						// Converts Direct3D8 (d3d8.dll) to Direct3D9 (d3d9.dll) https://github.com/crosire/d3d8to9
 	bool D3d9to9Ex = false;						// Converts Direct3D9 to Direct3D9Ex
 	bool D3d9on12 = false;						// Converts Direct3D9 to use CreateDirect3D9On12
-	bool Dinputto8 = false;						// Converts DirectInput (dinput.dll) to DirectInput8 (dinput8.dll)
-	bool DDrawCompat = false;					// Enables the default DDrawCompat functions https://github.com/narzoul/DDrawCompat/
-	bool DDrawCompat20 = false;					// Enables DDrawCompat v0.2.0b
-	bool DDrawCompat21 = false;					// Enables DDrawCompat v0.2.1
-	bool DDrawCompat32 = false;					// Enables DDrawCompat v0.3.2
-	bool DDrawCompatDisableGDIHook = false;		// Disables DDrawCompat GDI hooks
-	bool DDrawCompatNoProcAffinity = false;		// Disables DDrawCompat single processor affinity
 	bool DdrawAllowMultiSampling = false;		// Allows the game to use anti-aliasing if it enables it via the render state
 	bool DdrawAlternatePixelCenter = false;		// Enables alternate pixel center -0.5f vs 0.0
 	DWORD DdrawClampVertexZDepth = 0;			// 1) Clamps z depth to a max of 1.0f, 2) Clamps the z depth between 0.0f and 1.0f and recomputes w/rhw
@@ -300,36 +257,25 @@ struct CONFIG
 	bool DdrawForceMipMapAutoGen = false;		// Force Direct3d9 to use this AutoGenMipMap when using Dd7to9
 	bool DdrawEnableMouseHook = false;			// Allow to hook into mouse to limit it to the chosen resolution
 	DWORD DdrawHookSystem32 = 0;				// Hooks the ddraw.dll file in the Windows System32 folder
-	DWORD D3d8HookSystem32 = 0;					// Hooks the d3d8.dll file in the Windows System32 folder
 	DWORD D3d9HookSystem32 = 0;					// Hooks the d3d9.dll file in the Windows System32 folder
-	DWORD DinputHookSystem32 = 0;				// Hooks the dinput.dll file in the Windows System32 folder
-	DWORD Dinput8HookSystem32 = 0;				// Hooks the dinput8.dll file in the Windows System32 folder
-	DWORD DsoundHookSystem32 = 0;				// Hooks the dsound.dll file in the Windows System32 folder
 	float DepthBiasFactor = 0.0f;				// Multiplies DepthBias Render State by this number
 	float DepthBiasDropOffValue = 0.0f;			// Numbers between 0.0f and DepthBiasDropOffValue turn into zero
 	DWORD DeviceLookupCacheTime = 0;			// Number of seconds to cache the DeviceEnum callback data
-	bool DirectShowEmulation = false;			// Emulates DirectShow APIs
 	bool DisableGameUX = false;					// Disables the Microsoft Game Explorer which can sometimes cause high CPU in rundll32.exe and hang the game process
 	bool DisableGDIGammaRamp = false;			// Disables gamma ramp for GDI, some games look washed out with gamme ramp enabled
 	bool DisableHighDPIScaling = false;			// Disables display scaling on high DPI settings
 	bool DisableLogging = false;				// Disables the logging file
 	DWORD SetSwapEffectShim = 0;				// Disables the call to d3d9.dll 'Direct3D9SetSwapEffectUpgradeShim' to switch present mode
 	DWORD CacheClipPlane = 0;					// Caches the ClipPlane for Direct3D9 to fix an issue in d3d9 on Windows 8 and newer
-	bool EnvironmentCubeMapFix = false;			// Fixes environment cube maps when no texture is applied, issue exists in d3d8
 	DWORD CustomDisplayWidth = 0;				// Custom resolution width when using LimitDisplayModeCount, resolution must be supported by video card and monitor
 	DWORD CustomDisplayHeight = 0;				// Custom resolution height when using LimitDisplayModeCount, resolution must be supported by video card and monitor
 	bool EnableDdrawWrapper = false;			// Enables the ddraw wrapper
 	DWORD EnableD3d9Wrapper = 0;				// Enables the d3d9 wrapper
-	bool EnableDinput8Wrapper = false;			// Enables the dinput8 wrapper
-	bool EnableDsoundWrapper = false;			// Enables the dsound wrapper
 	bool EnableImgui = false;					// Enables imgui for debugging
 	DWORD EnableMultisamplingATOC = 0;			// Enables transparency multisampling (ATOC). 1) Just enable ATOC. 2) Enable ATOC and AlphaTest Render State
 	bool EnableOpenDialogHook = false;			// Enables the hooks for the open dialog box
 	bool EnableWindowMode = false;				// Enables WndMode for d3d9 wrapper
 	bool EnableVSync = false;					// Enables VSync for d3d9 wrapper
-	bool FixHighFrequencyMouse = false;			// Gets the latest mouse status by merging the DirectInput buffer data
-	float MouseMovementFactor = 1.0f;			// Sets the mouse movement speed factor, requires enabling FixHighFrequencyMouse
-	DWORD MouseMovementPadding = 0;				// Adds extra mouse movement to overcome issues with input deadzone in some games, requires enabling FixHighFrequencyMouse
 	DWORD FixPerfCounterUptime = 0;				// Reduces uptime counters to prevent slowdowns in games
 	bool ForceExclusiveFullscreen = false;		// Forces exclusive fullscreen mode in d3d9
 	DHEX ForceKeyboardLayout = {};				// Force specific keyboard layout
@@ -354,7 +300,7 @@ struct CONFIG
 	bool ResetScreenRes = false;				// Reset the screen resolution on close
 	DWORD LimitStateBlocks = 0;					// Reuses state block interfaces to prevent memory leaks
 	bool SendAltEnter = false;					// Sends an Alt+Enter message to the wind to tell it to go into fullscreen, requires FullScreen
-	bool UseShadowBackbuffer = false;			// Enables shadow backbuffer for d3d8to and Direct3D9 games
+	bool UseShadowBackbuffer = false;			// Enables shadow backbuffer for Direct3D9 games
 	bool WaitForProcess = false;				// Waits for process to end before continuing, requires FullScreen
 	bool WaitForWindowChanges = false;			// Waits for window handle to stabilize before setting fullsreen, requires FullScreen
 	bool WindowModeBorder = false;				// Enables the window border when EnableWindowMode is set, requires EnableWindowMode
@@ -387,32 +333,11 @@ struct CONFIG
 	std::vector<std::string> ExcludeProcess;	// List of excluded applications
 	std::vector<std::string> IncludeProcess;	// List of included applications
 
-	// Dinput8
-	bool FilterNonActiveInput = 0;
-
 	// SetAppCompatData
 	bool DXPrimaryEmulation[13] = { false };	// SetAppCompatData exported functions from ddraw.dll
 	DWORD LockColorkey = 0;						// DXPrimaryEmulation option that needs a second parameter
 	bool DisableMaxWindowedModeNotSet = false;	// If the DisableMaxWindowedMode option exists in the config file
 
-	// DirectSoundControl https://github.com/nRaecheR/DirectSoundControl
-	DWORD Num2DBuffers = 0;
-	DWORD Num3DBuffers = 0;
-	bool ForceCertification = false;
-	bool ForceExclusiveMode = false;
-	bool ForceSoftwareMixing = false;
-	bool ForceHardwareMixing = false;
-	bool ForceHQ3DSoftMixing = false;
-	bool ForceNonStaticBuffers = false;
-	bool ForceVoiceManagement = false;
-	bool ForcePrimaryBufferFormat = false;
-	DWORD PrimaryBufferBits = 0;
-	DWORD PrimaryBufferSamples = 0;
-	DWORD PrimaryBufferChannels = 0;
-	bool AudioClipDetection = false;
-	DWORD AudioFadeOutDelayMS = 0;
-	bool FixSpeakerConfigType = false;
-	bool StoppedDriverWorkaround = false;
 };
 extern CONFIG Config;
 
