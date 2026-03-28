@@ -41,11 +41,7 @@ namespace Settings
 	// Legacy settings
 	DWORD AutoFrameSkip = 0;
 	DWORD DdrawOverrideRefreshRate = 0;
-	bool DSoundCtrl = false;
 	bool EnvironmentMapCubeFix = false;
-	bool DDrawCompatExperimental = false;
-	bool DDrawCompat30 = false;
-	bool DDrawCompat31 = false;
 	bool ForceDirect3D9On12 = false;
 
 	// Function declarations
@@ -317,11 +313,7 @@ void __stdcall Settings::ParseCallback(char* name, char* value)
 	// For legacy settings
 	SET_LOCAL_VALUE(AutoFrameSkip);
 	SET_LOCAL_VALUE(DdrawOverrideRefreshRate);
-	SET_LOCAL_VALUE(DSoundCtrl);
 	SET_LOCAL_VALUE(EnvironmentMapCubeFix);
-	SET_LOCAL_VALUE(DDrawCompatExperimental);
-	SET_LOCAL_VALUE(DDrawCompat30);
-	SET_LOCAL_VALUE(DDrawCompat31);
 	SET_LOCAL_VALUE(ForceDirect3D9On12);
 
 	// Set Value of local settings
@@ -496,11 +488,7 @@ void Settings::SetDefaultConfigSettings()
 	// Set value to check if it exists in the ini file
 	Config.EnableD3d9Wrapper = NOT_EXIST;
 	Config.DdrawHookSystem32 = NOT_EXIST;
-	Config.D3d8HookSystem32 = NOT_EXIST;
 	Config.D3d9HookSystem32 = NOT_EXIST;
-	Config.DinputHookSystem32 = NOT_EXIST;
-	Config.Dinput8HookSystem32 = NOT_EXIST;
-	Config.DsoundHookSystem32 = NOT_EXIST;
 	Config.DdrawResolutionHack = NOT_EXIST;
 	Config.CacheClipPlane = NOT_EXIST;
 	Config.LimitStateBlocks = NOT_EXIST;
@@ -511,15 +499,9 @@ void Settings::SetDefaultConfigSettings()
 
 	// Set defaults
 	Config.DisableHighDPIScaling = true;
-	Config.FixSpeakerConfigType = true;
-
 	// Set other default values
 	Config.LoopSleepTime = 120;
 	Config.WindowSleepTime = 500;
-	Config.PrimaryBufferBits = 16;
-	Config.PrimaryBufferSamples = 44100;
-	Config.PrimaryBufferChannels = 2;
-	Config.AudioFadeOutDelayMS = 20;
 	SetValue("ExcludeProcess", "dxwnd.exe", &Config.ExcludeProcess);
 	SetValue("ExcludeProcess", "dgVoodooSetup.exe", &Config.ExcludeProcess);
 }
@@ -695,39 +677,6 @@ void CONFIG::SetConfig()
 		LoopSleepTime = 30;
 	}
 
-	// Verify DirectSoundControl options
-	EnableDsoundWrapper = (EnableDsoundWrapper || DSoundCtrl || IsSet(DsoundHookSystem32));
-	if (EnableDsoundWrapper)
-	{
-		if (ForceSoftwareMixing && ForceHardwareMixing)
-		{
-			Logging::Log() << "Cannot set both 'ForceSoftwareMixing' and 'ForceHardwareMixing'!  Disabling 'ForceSoftwareMixing'.";
-			ForceSoftwareMixing = false;
-		}
-		if (ForceVoiceManagement && (ForceSoftwareMixing || ForceHardwareMixing))
-		{
-			if (ForceSoftwareMixing)
-			{
-				Logging::Log() << "Cannot set both 'ForceVoiceManagement' and 'ForceSoftwareMixing'!  Disabling 'ForceVoiceManagement'.";
-			}
-			else
-			{
-				Logging::Log() << "Cannot set both 'ForceVoiceManagement' and 'ForceHardwareMixing'!  Disabling 'ForceVoiceManagement'.";
-			}
-			ForceVoiceManagement = false;
-		}
-		if (ForceVoiceManagement && !ForceNonStaticBuffers)
-		{
-			Logging::Log() << "'ForceNonStaticBuffers' should always be enabled with 'ForceVoiceManagement'!  Enabling 'ForceNonStaticBuffers'.";
-			ForceNonStaticBuffers = true;
-		}
-		if (ForceHQ3DSoftMixing && ForceHardwareMixing)
-		{
-			Logging::Log() << "'ForceHQ3DSoftMixing' has no effect when 'ForceHardwareMixing' is enabled!  Disabling 'ForceHQ3DSoftMixing'.";
-			ForceHQ3DSoftMixing = false;
-		}
-	}
-
 	// Default to 8 samples as some games have issues with more samples
 	AntiAliasing = (AntiAliasing == 1 || AntiAliasing > 16) ? 8 : AntiAliasing;
 
@@ -736,30 +685,13 @@ void CONFIG::SetConfig()
 	DdrawOverrideRefreshRate = 0;
 
 	// Enable wrapper settings
-	Dinputto8 = (Dinputto8 || IsSet(Dinput8HookSystem32));
-	EnableDinput8Wrapper = (EnableDinput8Wrapper || IsSet(Dinput8HookSystem32));
-
-	DDrawCompat32 = (DDrawCompat30 || DDrawCompat31 || DDrawCompat32 || DDrawCompatExperimental ||
-		(DDrawCompat && !DDrawCompat20 && !DDrawCompat21));
-	DDrawCompat = (DDrawCompat || DDrawCompat20 || DDrawCompat21 || DDrawCompat32);
-	if (DDrawCompat32)
-	{
-		DDrawCompat20 = false;
-		DDrawCompat21 = false;
-	}
-	else if (DDrawCompat21)
-	{
-		DDrawCompat20 = false;
-	}
 	D3d9on12 = (D3d9on12 || ForceDirect3D9On12);
 	EnableDdrawWrapper = (EnableDdrawWrapper || IsSet(DdrawHookSystem32) || IsSet(DdrawResolutionHack) || DdrawUseDirect3D9Caps || Dd7to9);
-	D3d8to9 = (D3d8to9 || IsSet(D3d8HookSystem32));
 	DdrawAutoFrameSkip = (AutoFrameSkip || DdrawAutoFrameSkip);																	// For legacy purposes
 	EnableWindowMode = (FullscreenWindowMode) ? true : EnableWindowMode;
 	EnableD3d9Wrapper = (IsSet(EnableD3d9Wrapper) || IsSet(D3d9HookSystem32) || D3d9to9Ex || D3d9on12 ||
 		(EnableD3d9Wrapper == NOT_EXIST && (AnisotropicFiltering || AntiAliasing || IsSet(CacheClipPlane) || EnableVSync ||		// For legacy purposes
 			ForceMixedVertexProcessing || ForceSystemMemVertexCache || ForceVsyncMode || EnableWindowMode)));					// For legacy purposes
-	EnvironmentCubeMapFix = EnvironmentCubeMapFix || EnvironmentMapCubeFix;														// For legacy purposes
 
 	// Set ddraw color bit mode
 	DdrawOverrideBitMode = (DdrawOverrideBitMode) ? DdrawOverrideBitMode : (Force32bitColor) ? 32 : (Force16bitColor) ? 16 : 0;
@@ -805,28 +737,6 @@ void CONFIG::SetConfig()
 		}
 	}
 
-	// Disable DDrawCompat process affinity if dxwrapper's SingleProcAffinity is enabled
-	if (SingleProcAffinity)
-	{
-		DDrawCompatNoProcAffinity = true;
-	}
-
-	// Set mouse scroll factor
-	if (abs(MouseMovementFactor) < 0.01f || abs(MouseMovementFactor - 1.0f) < 0.01f)
-	{
-		MouseMovementFactor = 1.0f;
-	}
-	else if (MouseMovementFactor != 0.0f)
-	{
-		FixHighFrequencyMouse = true;
-	}
-
-	// Mouse movement padding
-	if (MouseMovementPadding)
-	{
-		FixHighFrequencyMouse = true;
-	}
-
 	// Windows Lie
 	WinVersionLieSP = (WinVersionLieSP > 0 && WinVersionLieSP <= 5) ? WinVersionLieSP : 0;
 
@@ -834,6 +744,6 @@ void CONFIG::SetConfig()
 	CacheClipPlane = (CacheClipPlane != 0);
 	DdrawForceMipMapAutoGen = DdrawForceMipMapAutoGen || ForceMipMapAutoGen;
 	DdrawResolutionHack = (DdrawResolutionHack != 0);
-	LimitStateBlocks = (LimitStateBlocks != NOT_EXIST) ? LimitStateBlocks : (Dd7to9 || D3d8to9);
+	LimitStateBlocks = (LimitStateBlocks != NOT_EXIST) ? LimitStateBlocks : Dd7to9;
 	WindowModeGammaShader = (WindowModeGammaShader != NOT_EXIST) ? WindowModeGammaShader : 1;
 }
