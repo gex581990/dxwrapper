@@ -32,7 +32,6 @@
 #include "Dllmain\Dllmain.h"
 #include "Wrappers\wrapper.h"
 #include "ddraw\ddrawExternal.h"
-#include "d3d8\d3d8External.h"
 #include "d3d9\d3d9External.h"
 #include "External\Hooking\Hook.h"
 #include "External\Hooking\Disasm.h"

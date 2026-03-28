@@ -489,6 +489,8 @@ void Settings::SetDefaultConfigSettings()
 	Config.EnableD3d9Wrapper = NOT_EXIST;
 	Config.DdrawHookSystem32 = NOT_EXIST;
 	Config.D3d9HookSystem32 = NOT_EXIST;
+	Config.DinputHookSystem32 = NOT_EXIST;
+	Config.Dinput8HookSystem32 = NOT_EXIST;
 	Config.DdrawResolutionHack = NOT_EXIST;
 	Config.CacheClipPlane = NOT_EXIST;
 	Config.LimitStateBlocks = NOT_EXIST;
@@ -685,6 +687,9 @@ void CONFIG::SetConfig()
 	DdrawOverrideRefreshRate = 0;
 
 	// Enable wrapper settings
+	Dinputto8 = (Dinputto8 || IsSet(Dinput8HookSystem32));
+	EnableDinput8Wrapper = (EnableDinput8Wrapper || IsSet(Dinput8HookSystem32));
+
 	D3d9on12 = (D3d9on12 || ForceDirect3D9On12);
 	EnableDdrawWrapper = (EnableDdrawWrapper || IsSet(DdrawHookSystem32) || IsSet(DdrawResolutionHack) || DdrawUseDirect3D9Caps || Dd7to9);
 	DdrawAutoFrameSkip = (AutoFrameSkip || DdrawAutoFrameSkip);																	// For legacy purposes
@@ -692,6 +697,7 @@ void CONFIG::SetConfig()
 	EnableD3d9Wrapper = (IsSet(EnableD3d9Wrapper) || IsSet(D3d9HookSystem32) || D3d9to9Ex || D3d9on12 ||
 		(EnableD3d9Wrapper == NOT_EXIST && (AnisotropicFiltering || AntiAliasing || IsSet(CacheClipPlane) || EnableVSync ||		// For legacy purposes
 			ForceMixedVertexProcessing || ForceSystemMemVertexCache || ForceVsyncMode || EnableWindowMode)));					// For legacy purposes
+	EnvironmentCubeMapFix = EnvironmentCubeMapFix || EnvironmentMapCubeFix;														// For legacy purposes
 
 	// Set ddraw color bit mode
 	DdrawOverrideBitMode = (DdrawOverrideBitMode) ? DdrawOverrideBitMode : (Force32bitColor) ? 32 : (Force16bitColor) ? 16 : 0;
@@ -735,6 +741,22 @@ void CONFIG::SetConfig()
 		{
 			isAppCompatDataSet = true;
 		}
+	}
+
+	// Set mouse scroll factor
+	if (abs(MouseMovementFactor) < 0.01f || abs(MouseMovementFactor - 1.0f) < 0.01f)
+	{
+		MouseMovementFactor = 1.0f;
+	}
+	else if (MouseMovementFactor != 0.0f)
+	{
+		FixHighFrequencyMouse = true;
+	}
+
+	// Mouse movement padding
+	if (MouseMovementPadding)
+	{
+		FixHighFrequencyMouse = true;
 	}
 
 	// Windows Lie
