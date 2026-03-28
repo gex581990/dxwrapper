@@ -421,7 +421,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD fdwReason, LPVOID lpReserved)
 		}
 
 		// Start ddraw.dll module
-		if (Config.EnableDdrawWrapper || Config.DDrawCompat)
+		if (Config.EnableDdrawWrapper)
 		{
 			// Initialize d3dx9 first
 			LoadD3dx9();
