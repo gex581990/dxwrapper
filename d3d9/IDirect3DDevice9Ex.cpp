@@ -1300,7 +1300,7 @@ HRESULT m_IDirect3DDevice9Ex::SetClipPlane(DWORD Index, CONST float* pPlane)
 {
 	Logging::LogDebug() << __FUNCTION__ << " (" << this << ")";
 
-	// CacheClipPlane if not using d3d8to9 (it already exists there)
+	// CacheClipPlane
 	if (Config.CacheClipPlane && SHARED.ClientDirectXVersion != 8)
 	{
 		if (!pPlane || Index >= MAX_CLIP_PLANES)
@@ -1322,7 +1322,7 @@ HRESULT m_IDirect3DDevice9Ex::GetClipPlane(DWORD Index, float* pPlane)
 {
 	Logging::LogDebug() << __FUNCTION__ << " (" << this << ")";
 
-	// CacheClipPlane if not using d3d8to9 (it already exists there)
+	// CacheClipPlane
 	if (Config.CacheClipPlane && SHARED.ClientDirectXVersion != 8)
 	{
 		if (!pPlane || Index >= MAX_CLIP_PLANES)

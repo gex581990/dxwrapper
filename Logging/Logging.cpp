@@ -914,20 +914,6 @@ std::ostream& operator<<(std::ostream& os, const D3DSURFACE_DESC& desc)
 // DirectDraw
 DEFINE_GUID(IID_IDirectDrawKernel, 0x8D56C120, 0x6A08, 0x11D0, 0x9B, 0x06, 0x00, 0xA0, 0xC9, 0x03, 0xA3, 0xB8);
 DEFINE_GUID(IID_IDirectDrawSurfaceKernel, 0x60755DA0, 0x6A40, 0x11D0, 0x9B, 0x06, 0x00, 0xA0, 0xC9, 0x03, 0xA3, 0xB8);
-#ifndef _D3D8_H_
-DEFINE_GUID(IID_IDirect3D8, 0x1dd9e8da, 0x1c77, 0x4d40, 0xb0, 0xcf, 0x98, 0xfe, 0xfd, 0xff, 0x95, 0x12);
-DEFINE_GUID(IID_IDirect3DDevice8, 0x7385e5df, 0x8fe8, 0x41d5, 0x86, 0xb6, 0xd7, 0xb4, 0x85, 0x47, 0xb6, 0xcf);
-DEFINE_GUID(IID_IDirect3DResource8, 0x1b36bb7b, 0x9b7, 0x410a, 0xb4, 0x45, 0x7d, 0x14, 0x30, 0xd7, 0xb3, 0x3f);
-DEFINE_GUID(IID_IDirect3DBaseTexture8, 0xb4211cfa, 0x51b9, 0x4a9f, 0xab, 0x78, 0xdb, 0x99, 0xb2, 0xbb, 0x67, 0x8e);
-DEFINE_GUID(IID_IDirect3DTexture8, 0xe4cdd575, 0x2866, 0x4f01, 0xb1, 0x2e, 0x7e, 0xec, 0xe1, 0xec, 0x93, 0x58);
-DEFINE_GUID(IID_IDirect3DCubeTexture8, 0x3ee5b968, 0x2aca, 0x4c34, 0x8b, 0xb5, 0x7e, 0x0c, 0x3d, 0x19, 0xb7, 0x50);
-DEFINE_GUID(IID_IDirect3DVolumeTexture8, 0x4b8aaafa, 0x140f, 0x42ba, 0x91, 0x31, 0x59, 0x7e, 0xaf, 0xaa, 0x2e, 0xad);
-DEFINE_GUID(IID_IDirect3DVertexBuffer8, 0x8aeeeac7, 0x05f9, 0x44d4, 0xb5, 0x91, 0x00, 0x0b, 0x0d, 0xf1, 0xcb, 0x95);
-DEFINE_GUID(IID_IDirect3DIndexBuffer8, 0x0e689c9a, 0x053d, 0x44a0, 0x9d, 0x92, 0xdb, 0x0e, 0x3d, 0x75, 0x0f, 0x86);
-DEFINE_GUID(IID_IDirect3DSurface8, 0xb96eebca, 0xb326, 0x4ea5, 0x88, 0x2f, 0x2f, 0xf5, 0xba, 0xe0, 0x21, 0xdd);
-DEFINE_GUID(IID_IDirect3DVolume8, 0xbd7349f5, 0x14f1, 0x42e4, 0x9c, 0x79, 0x97, 0x23, 0x80, 0xdb, 0x40, 0xc0);
-DEFINE_GUID(IID_IDirect3DSwapChain8, 0x928c088b, 0x76b9, 0x4c6b, 0xa5, 0x36, 0xa5, 0x90, 0x85, 0x38, 0x76, 0xcd);
-#endif
 // DirectShow
 DEFINE_GUID(IID_IAMMultiMediaStream, 0xbebe595c, 0x9a6f, 0x11d0, 0x8f, 0xde, 0x00, 0xc0, 0x4f, 0xd9, 0x18, 0x9d);
 DEFINE_GUID(IID_IAMMediaStream, 0xbebe595d, 0x9a6f, 0x11d0, 0x8f, 0xde, 0x00, 0xc0, 0x4f, 0xd9, 0x18, 0x9d);
@@ -1015,19 +1001,6 @@ std::ostream& operator<<(std::ostream& os, REFIID riid)
 	CHECK_REFIID(IID, IDirect3DViewport3);
 	CHECK_REFIID(IID, IDirect3DVertexBuffer);
 	CHECK_REFIID(IID, IDirect3DVertexBuffer7);
-	// d3d8
-	CHECK_REFIID(IID, IDirect3D8);
-	CHECK_REFIID(IID, IDirect3DDevice8);
-	CHECK_REFIID(IID, IDirect3DResource8);
-	CHECK_REFIID(IID, IDirect3DBaseTexture8);
-	CHECK_REFIID(IID, IDirect3DTexture8);
-	CHECK_REFIID(IID, IDirect3DCubeTexture8);
-	CHECK_REFIID(IID, IDirect3DVolumeTexture8);
-	CHECK_REFIID(IID, IDirect3DVertexBuffer8);
-	CHECK_REFIID(IID, IDirect3DIndexBuffer8);
-	CHECK_REFIID(IID, IDirect3DSurface8);
-	CHECK_REFIID(IID, IDirect3DVolume8);
-	CHECK_REFIID(IID, IDirect3DSwapChain8);
 	// d3d9
 	CHECK_REFIID(IID, IDirect3D9);
 	CHECK_REFIID(IID, IDirect3DDevice9);
@@ -2558,34 +2531,3 @@ std::ostream& operator<<(std::ostream& os, const WINDOWPOS& wp)
 		<< wp.cy
 		<< Logging::hex(wp.flags);
 }
-
-#ifdef DDRAWCOMPAT
-std::ostream& operator<<(std::ostream& os, const GESTURENOTIFYSTRUCT& gns)
-{
-	return Logging::LogStruct(os)
-		<< gns.cbSize
-		<< Logging::hex(gns.dwFlags)
-		<< gns.hwndTarget
-		<< gns.ptsLocation
-		<< gns.dwInstanceID;
-}
-
-std::ostream& operator<<(std::ostream& os, const TITLEBARINFOEX& tbi)
-{
-	return Logging::LogStruct(os)
-		<< tbi.cbSize
-		<< tbi.rcTitleBar
-		<< Logging::array(tbi.rgstate, sizeof(tbi.rgstate) / sizeof(tbi.rgstate[0]))
-		<< Logging::array(tbi.rgrect, sizeof(tbi.rgrect) / sizeof(tbi.rgrect[0]));
-}
-
-std::ostream& operator<<(std::ostream& os, const TOUCH_HIT_TESTING_INPUT& thti)
-{
-	return Logging::LogStruct(os)
-		<< thti.pointerId
-		<< thti.point
-		<< thti.boundingBox
-		<< thti.nonOccludedBoundingBox
-		<< thti.orientation;
-}
-#endif // DDRAWCOMPAT
