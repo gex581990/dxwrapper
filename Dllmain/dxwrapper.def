@@ -10,23 +10,6 @@ DxWrapperLogging				@101
 
 
 ; ****
-;LIBRARY "dsound"    <--- Needs to have the correct ordinals since some programs use the ordinal numbers for dsound APIs
-; ****
-DirectSoundCreate				@1
-DirectSoundEnumerateA			@2
-DirectSoundEnumerateW			@3
-DllCanUnloadNow					PRIVATE
-DllGetClassObject				PRIVATE
-DirectSoundCaptureCreate		@6
-DirectSoundCaptureEnumerateA	@7
-DirectSoundCaptureEnumerateW	@8
-GetDeviceID						@9
-DirectSoundFullDuplexCreate		@10
-DirectSoundCreate8				@11
-DirectSoundCaptureCreate8		@12
-
-
-; ****
 ;LIBRARY "ddraw"
 ; ****
 AcquireDDThreadLock				@102
@@ -51,14 +34,6 @@ GetSurfaceFromDC				@118
 RegisterSpecialCase				@119
 ReleaseDDThreadLock				@120
 SetAppCompatData				@121
-
-
-; ****
-;LIBRARY "d3d8"
-; ****
-ValidatePixelShader				@122
-ValidateVertexShader			@123
-Direct3DCreate8					@124
 
 
 ; ****

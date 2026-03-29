@@ -177,12 +177,10 @@ struct DLLTYPE
 {
 	const DWORD dxwrapper = 0;
 	const DWORD ddraw = 1;
-	const DWORD d3d8 = 2;
-	const DWORD d3d9 = 3;
-	const DWORD dsound = 4;
-	const DWORD dinput = 5;
-	const DWORD dinput8 = 6;
-	const DWORD winmm = 7;
+	const DWORD d3d9 = 2;
+	const DWORD dinput = 3;
+	const DWORD dinput8 = 4;
+	const DWORD winmm = 5;
 };
 static const DLLTYPE dtype;
 
@@ -190,12 +188,10 @@ static const DLLTYPE dtype;
 static constexpr const char* dtypename[] = {
 	"dxwrapper.dll",// 0
 	"ddraw.dll",	// 1
-	"d3d8.dll",		// 2
-	"d3d9.dll",		// 3
-	"dsound.dll",	// 4
-	"dinput.dll",	// 5
-	"dinput8.dll",	// 6
-	"winmm.dll",	// 7
+	"d3d9.dll",		// 2
+	"dinput.dll",	// 3
+	"dinput8.dll",	// 4
+	"winmm.dll",	// 5
 };
 static constexpr int dtypeArraySize = (sizeof(dtypename) / sizeof(*dtypename));
 
@@ -339,8 +335,8 @@ struct CONFIG
 	bool FlipEx = false;						// Enable FlipEx presentation mode for D3D9Ex. Disables AntiAliasing
 	DWORD RealWrapperMode = 0;					// Internal wrapper mode
 	MEMORYINFO VerifyMemoryInfo;				// Memory used for verification before hot patching
-	std::string WinVersionLie = "";				// Using DDrawCompat WinVersionLie to tell the OS a different OS
-	DWORD WinVersionLieSP = 0;					// Using DDrawCompat WinVersionLie to tell the OS a different OS
+	std::string WinVersionLie = "";				// Lie to the OS about the Windows version
+	DWORD WinVersionLieSP = 0;					// Service pack level for the Windows version lie
 	std::vector<MEMORYINFO> MemoryInfo;			// Addresses and memory used in hot patching
 	std::string RealDllPath;					// Manually set Dll to wrap
 	std::string RunProcess;						// Process to run on load

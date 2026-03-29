@@ -28,9 +28,6 @@
 #ifdef DINPUT8
 #include "dinput8\dinput8External.h"
 #endif
-#ifdef DSOUND
-#include "dsound\dsoundExternal.h"
-#endif
 
 INITIALIZE_OUT_WRAPPED_PROC(CoGetClassObject, unused);
 INITIALIZE_OUT_WRAPPED_PROC(CoCreateInstance, unused);
@@ -79,7 +76,7 @@ namespace {
 			}
 		}
 
-		// No existing entry — create a new one
+		// No existing entry ï¿½ create a new one
 		GuidLogLimitEntry newEntry;
 		newEntry.iid = riid;
 		newEntry.Limit = 1; // First use counts as 1
@@ -319,46 +316,6 @@ static HRESULT CreateWrapperInterface(REFCLSID rclsid, LPUNKNOWN pUnkOuter, DWOR
 			}
 
 			return hr;
-		}
-	}
-#endif
-
-#ifdef DSOUND
-	// DirectSound wrapper
-	if (Config.EnableDsoundWrapper)
-	{
-		// Create DirectSound interface
-		if (rclsid == CLSID_DirectSound)
-		{
-			if (riid == IID_IClassFactory)
-			{
-				return CreateClassFactory(rclsid, ppv);
-			}
-
-			if (riid != IID_IUnknown && riid != IID_IDirectSound)
-			{
-				LOG_LIMIT(100, __FUNCTION__ << " Error: invalid IID: " << riid << " from: " << rclsid);
-				return E_NOINTERFACE;
-			}
-
-			return ((DirectSoundCreateProc)dsound::DirectSoundCreate_var)(NULL, (LPDIRECTSOUND*)ppv, pUnkOuter);
-		}
-
-		// Create DirectSound8 interface
-		if (rclsid == CLSID_DirectSound8)
-		{
-			if (riid == IID_IClassFactory)
-			{
-				return CreateClassFactory(rclsid, ppv);
-			}
-
-			if (riid != IID_IUnknown && riid != IID_IDirectSound8)
-			{
-				LOG_LIMIT(100, __FUNCTION__ << " Error: invalid IID: " << riid << " from: " << rclsid);
-				return E_NOINTERFACE;
-			}
-
-			return ((DirectSoundCreate8Proc)dsound::DirectSoundCreate8_var)(NULL, (LPDIRECTSOUND8*)ppv, pUnkOuter);
 		}
 	}
 #endif
