@@ -203,7 +203,6 @@ bool Utils::ShouldSetAffinity(DWORD threadId, HANDLE hThread)
 	if (_stricmp("d3d9.dll", Name) == 0 ||
 		_stricmp("dinput.dll", Name) == 0 ||
 		_stricmp("dinput8.dll", Name) == 0 ||
-		_stricmp("dsound.dll", Name) == 0 ||
 		isPrefix((GetSystemPath() + "\\DriverStore").c_str(), ModulePath))
 	{
 		Logging::LogDebug() << __FUNCTION__ << " SKIPPING -> ThreadID=" << threadId << ", StartAddr=" << startAddress << ", Module=" << Name;
